@@ -26,7 +26,7 @@ An internal management application for a boutique hotel.
 - App-wide settings: breakfast price, min/max nights, max guests
 - Fully integrated dark mode
 
-## 🗂 Pages
+## 📄 Pages
 
 - `/dashboard` : Hotel KPIs & guest list for the day
 - `/bookings` : Table of all bookings (filterable by status)
