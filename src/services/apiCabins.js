@@ -11,7 +11,7 @@ export const getCabins = async () => {
   return data;
 };
 
-export const createEditCabin = async (newCabin, id) => {
+export const createUpdateCabin = async (newCabin, id) => {
   const hasImagePath = newCabin.image?.startsWith?.(supabaseUrl);
 
   const imageName = `${Math.random()}-${newCabin.image.name}`.replaceAll(
@@ -23,13 +23,13 @@ export const createEditCabin = async (newCabin, id) => {
     ? newCabin.image
     : `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
 
-  // Create/edit cabin
+  // Create/update cabin
   let query = supabase.from("cabins");
 
   // Create
   if (!id) query = query.insert([{ ...newCabin, image: imagePath }]);
 
-  // Edit
+  // Update
   if (id)
     query = query
       .update({ ...newCabin, image: imagePath })
@@ -43,7 +43,7 @@ export const createEditCabin = async (newCabin, id) => {
     throw new Error("Cabins could not be created");
   }
 
-  // upload image if new cabin or if edited image is new
+  // upload image if new cabin or if updated image is new
   if (hasImagePath) return data;
 
   /*   const avatarFile = event.target.files[0]; */
