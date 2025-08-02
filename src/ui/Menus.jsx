@@ -1,4 +1,11 @@
-import { createContext, useContext, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 import { HiEllipsisVertical } from "react-icons/hi2";
 import styled from "styled-components";
@@ -36,8 +43,8 @@ const StyledList = styled.ul`
   box-shadow: var(--shadow-md);
   border-radius: var(--border-radius-md);
 
-  right: ${(props) => props.position.x}px;
-  top: ${(props) => props.position.y}px;
+  right: ${(props) => props.$position.x}px;
+  top: ${(props) => props.$position.y}px;
 `;
 
 const StyledButton = styled.button`
@@ -85,18 +92,43 @@ const Menus = ({ children }) => {
 
 const Toggle = ({ id }) => {
   const { openId, close, open, setPosition } = useContext(MenusContext);
+  const buttonRef = useRef();
 
-  const handleClick = (e) => {
-    const rect = e.target.closest("button").getBoundingClientRect();
-    openId === "" || openId !== id ? open(id) : close();
+  const updatePosition = useCallback(() => {
+    if (!buttonRef.current) return;
+
+    const rect = buttonRef.current.getBoundingClientRect();
     setPosition({
       x: window.innerWidth - rect.width - rect.x,
       y: rect.y + rect.height + 8,
     });
+  }, [setPosition]);
+
+  useEffect(() => {
+    if (openId === id) {
+      window.addEventListener("scroll", updatePosition);
+      window.addEventListener("resize", updatePosition);
+
+      updatePosition();
+
+      return () => {
+        window.removeEventListener("scroll", updatePosition);
+        window.removeEventListener("resize", updatePosition);
+      };
+    }
+  }, [openId, id, updatePosition]);
+
+  const handleClick = (e) => {
+    if (openId === "" || openId !== id) {
+      open(id);
+      updatePosition();
+    } else {
+      close();
+    }
   };
 
   return (
-    <StyledToggle onClick={handleClick}>
+    <StyledToggle onClick={handleClick} ref={buttonRef}>
       <HiEllipsisVertical />
     </StyledToggle>
   );
@@ -106,10 +138,10 @@ const List = ({ children, id }) => {
   const { openId, position, close } = useContext(MenusContext);
   const ref = useOutsideClick(close);
 
-  if (openId !== id) return null;
+  if (openId !== id || !position) return null;
 
   return createPortal(
-    <StyledList position={position} ref={ref}>
+    <StyledList $position={position} ref={ref}>
       {children}
     </StyledList>,
     document.body
