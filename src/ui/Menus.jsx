@@ -119,6 +119,8 @@ const Toggle = ({ id }) => {
   }, [openId, id, updatePosition]);
 
   const handleClick = (e) => {
+    e.stopPropagation();
+
     if (openId === "" || openId !== id) {
       open(id);
       updatePosition();
@@ -136,7 +138,7 @@ const Toggle = ({ id }) => {
 
 const List = ({ children, id }) => {
   const { openId, position, close } = useContext(MenusContext);
-  const ref = useOutsideClick(close);
+  const ref = useOutsideClick(close, false);
 
   if (openId !== id || !position) return null;
 
