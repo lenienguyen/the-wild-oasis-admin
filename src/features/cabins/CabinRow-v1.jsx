@@ -63,7 +63,6 @@ const CabinRow = ({ cabin }) => {
   } = cabin;
 
   const handleDuplicate = () => {
-    console.log("duplicate");
     createCabin({
       name: `Copy of ${name}`,
       maxCapacity,
