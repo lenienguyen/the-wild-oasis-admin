@@ -1,4 +1,14 @@
 import styled from "styled-components";
+import Heading from "../../ui/Heading";
+import {
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
+import { useDarkMode } from "../../context/DarkModeContext";
 
 const ChartBox = styled.div`
   /* Box */
@@ -105,7 +115,31 @@ const startDataDark = [
 ];
 
 const prepareData = (startData, stays) => {
-  const incArrayValue = (arr, field) => {
+  const getLabel = (num) => {
+    if (num === 1) return "1 night";
+    if (num === 2) return "2 nights";
+    if (num === 3) return "3 nights";
+    if (num <= 5) return "4-5 nights";
+    if (num <= 7) return "6-7 nights";
+    if (num <= 14) return "8-14 nights";
+    if (num <= 21) return "15-21 nights";
+    return "21+ nights";
+  };
+
+  const valueMap = stays.reduce((map, stay) => {
+    const label = getLabel(stay.numNights);
+    map[label] = (map[label] || 0) + 1;
+    return map;
+  }, {});
+
+  return startData
+    .map((item) => ({
+      ...item,
+      value: (item.value || 0) + (valueMap[item.duration] || 0),
+    }))
+    .filter((item) => item.value > 0);
+
+  /* const incArrayValue = (arr, field) => {
     return arr.map((obj) =>
       obj.duration === field ? { ...obj, value: obj.value + 1 } : obj
     );
@@ -126,5 +160,50 @@ const prepareData = (startData, stays) => {
     }, startData)
     .filter((obj) => obj.value > 0);
 
-  return data;
+  return data; */
 };
+
+const DurationChart = ({ confirmedStays }) => {
+  const { isDarkMode } = useDarkMode();
+  const startData = isDarkMode ? startDataDark : startDataLight;
+  const data = prepareData(startData, confirmedStays);
+
+  return (
+    <ChartBox>
+      <Heading as="h2">Stay duration summary</Heading>
+      <ResponsiveContainer width="100%" height={240}>
+        <PieChart>
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="duration"
+            innerRadius={85}
+            outerRadius={110}
+            cx="50%"
+            cy="50%"
+            paddingAngle={3}
+          >
+            {data.map((entry) => (
+              <Cell
+                fill={entry.color}
+                stroke={entry.color}
+                key={entry.duration}
+              />
+            ))}
+          </Pie>
+          <Tooltip />
+          <Legend
+            verticalAlign="middle"
+            align="right"
+            width="30%"
+            layout="vertical"
+            iconSize={15}
+            iconType="circle"
+          />
+        </PieChart>
+      </ResponsiveContainer>
+    </ChartBox>
+  );
+};
+
+export default DurationChart;

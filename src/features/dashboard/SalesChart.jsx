@@ -21,7 +21,7 @@ const StyledSalesChart = styled(DashboardBox)`
   & .recharts-cartesian-grid-vertical line {
     stroke: var(--color-grey-300);
   }
-`;
+`; /* 
 
 const fakeData = [
   { label: "Jan 09", totalSales: 480, extrasSales: 20 },
@@ -53,7 +53,7 @@ const fakeData = [
   { label: "Feb 04", totalSales: 1500, extrasSales: 500 },
   { label: "Feb 05", totalSales: 1400, extrasSales: 600 },
   { label: "Feb 06", totalSales: 1450, extrasSales: 400 },
-];
+]; */
 
 const SalesChart = ({ bookings, numDays }) => {
   const { isDarkMode } = useDarkMode();
@@ -75,7 +75,6 @@ const SalesChart = ({ bookings, numDays }) => {
         .reduce((acc, cur) => acc + cur.extrasPrice, 0),
     };
   });
-  console.log(data);
 
   const colors = isDarkMode
     ? {
@@ -93,7 +92,10 @@ const SalesChart = ({ bookings, numDays }) => {
 
   return (
     <StyledSalesChart>
-      <Heading as="h2">Sales</Heading>
+      <Heading as="h2">
+        Sales from {format(allDates.at(0), "MMM dd yyyy")} to &mdash;{" "}
+        {format(allDates.at(-1), "MMM dd yyyy")}
+      </Heading>
       <ResponsiveContainer width="100%" height={300}>
         <AreaChart data={data}>
           <CartesianGrid strokeDasharray="4" />
