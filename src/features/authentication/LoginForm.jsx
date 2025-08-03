@@ -14,7 +14,15 @@ const LoginForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email || !password) return;
-    login({ email, password });
+    login(
+      { email, password },
+      {
+        onSettled: () => {
+          setEmail("");
+          setPassword("");
+        },
+      }
+    );
   };
 
   return (
