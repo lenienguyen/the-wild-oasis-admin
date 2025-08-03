@@ -12,8 +12,8 @@ import { useUpdateCabin } from "./useUpdateCabin";
 
 const CreateCabinForm = ({ cabinToEdit = {}, onCloseModal }) => {
   const { isCreating, createCabin } = useCreateCabin();
-  const { isEditing, updateCabin } = useUpdateCabin();
-  const isWorking = isCreating || isEditing;
+  const { isUpdating, updateCabin } = useUpdateCabin();
+  const isWorking = isCreating || isUpdating;
 
   const { id: editId, ...editValues } = cabinToEdit;
   const isEditSession = Boolean(editId);
