@@ -4,7 +4,7 @@ This repository contains the **internal admin dashboard** for _The Wild Oasis_, 
 This web application is used exclusively by hotel staff to manage bookings, guests, cabins, and operational settings.  
 It is fully integrated with the same database and API used by the public-facing guest website, ensuring real-time synchronization between both platforms.
 
-This admin panel provides a full management experience for daily hotel operations, including CRUD functionality, check-in flows, analytics, and system configuration — all built with modern React tools and architecture.
+This admin panel provides a full management experience for daily hotel operations, including CRUD functionality, check-in flows, analytics, and system configuration, all built with modern React tools and architecture.
 
 > Internal use only for hotel employees  
 > Authenticated back-office built directly into the API  
