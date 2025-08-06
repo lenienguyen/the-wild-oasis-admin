@@ -1,12 +1,12 @@
 # The Wild Oasis Admin 🌿
 
-**Note:** This repository contains the internal back-office application for _The Wild Oasis_ website, used exclusively by hotel staff for managing bookings, guests, and cabins.  
-A separate customer-facing website for guests to book stays will be developed later, using the same API.
+This repository contains the **internal admin dashboard** for _The Wild Oasis_, a boutique hotel offering 8 luxury wooden cabins.  
+This web application is used exclusively by hotel staff to manage bookings, guests, cabins, and operational settings.  
+It is fully integrated with the same database and API used by the public-facing guest website, ensuring real-time synchronization between both platforms.
 
-An internal management application for a boutique hotel.
-**The Wild Oasis** has 8 luxury wooden cabins and needed a custom digital solution to manage every aspect of their operations, from bookings and guests to cabins and analytics. This full-stack React project showcases a complete admin dashboard experience, built with modern tools and a professional architecture.
+This admin panel provides a full management experience for daily hotel operations, including CRUD functionality, check-in flows, analytics, and system configuration — all built with modern React tools and architecture.
 
-> Internal hotel app : used only by hotel employees  
+> Internal use only for hotel employees  
 > Authenticated back-office built directly into the API  
 > Full CRUD on bookings, cabins, and user data  
 > Dashboard with statistics and visualizations
@@ -37,42 +37,24 @@ An internal management application for a boutique hotel.
 - `/users` : Sign-up page (internal use only)
 - `/login` : Login screen
 
-## 🛠 Technologies
+## 🛠 Technologies and librairies
 
-- **React Router**
-- **Styled Components**
-- **React Query**
-- **Context API**
-- **React Hook Form**
+- **React**
 - **Supabase** : authentication, database, and storage
-- **React Icons**
-- **React Hot Toast** : toast notifications
+- **React Query**
+- **Styled Components**
+- **React Hook Form**
 - **Recharts** : data visualization and charts
-- **date-fns** : date manipulation
 
 ## 💻 Quick Start
 
-To run **The Wild Oasis Admin** back-office app locally, follow these steps:
+To run **The Wild Oasis Admin** back-office app locally:
 
-1. **Clone the repository:**
+```bash
+git clone https://github.com/lenienguyen/the-wild-oasis.git
+cd the-wild-oasis
+npm install
+npm run dev
+```
 
-   ```bash
-   git clone https://github.com/your-username/the-wild-oasis.git
-   cd the-wild-oasis
-   ```
-
-2. **Install dependencies:**
-
-   ```bash
-   npm install
-   ```
-
-3. **Start the development server:**
-
-   ```bash
-   npm start
-   ```
-
-4. **Open the app in your browser:**
-
-   [http://localhost:3000](http://localhost:3000)
+Open [http://localhost:5173](http://localhost:5173) with your browser to see the result.
